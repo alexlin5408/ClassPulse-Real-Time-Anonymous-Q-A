@@ -1,12 +1,6 @@
 <?php
-// Establish database connection
-$config = parse_ini_file("../../../database/db_config.ini");
-$conn = new mysqli($config["servername"], $config["username"], $config["password"], $config["dbname"]);
-
-// Check connection
-if ($conn->connect_error) {
-	die("Connection failed: " . $conn->connect_error);
-}
+//Connect to the database
+require_once __DIR__ . '/../../database/db.php';
 
 session_start();
 
@@ -40,4 +34,3 @@ if (isset($_SESSION['sessionCode']) && isset($_SESSION['sessionID'])) {
 	} else {
 		echo "Error preparing statement: " . $conn->error;
 	}
-?>

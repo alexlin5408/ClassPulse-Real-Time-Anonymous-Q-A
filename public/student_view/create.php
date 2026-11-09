@@ -2,32 +2,8 @@
 // Start PHP session
 session_start();
 
-// Establish database connection
-$config = parse_ini_file("../../../database/db_config.ini");
-$conn = new mysqli($config["servername"], $config["username"], $config["password"], $config["dbname"]);
-
-// TODO: Delete these blocks 
-
-if (isset($_SESSION['sessionCode'])) {
-	$sessionCode = $_SESSION['sessionCode'];
-	//echo "Session Code : ".$sessionCode."<br>";
-} else {
-	echo "Session code not found.";
-}
-
-
-if (isset($_SESSION['sessionID'])) {
-	$sessionID = $_SESSION['sessionID'];
-	//echo "Session ID : ".$sessionID."<br>";
-} else {
-	echo "Session ID not found ";
-}
-
-
-// Check connection
-if ($conn->connect_error) {
-	die("Connection failed: " . $conn->connect_error);
-}
+//Connect to the database
+require_once __DIR__ . '/../../database/db.php';
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -45,12 +21,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$specificIdRow = $specificIdResult->fetch_assoc();
 			$specificId = $specificIdRow['StudentID'];
 			$_SESSION['StudentID'] = $specificId;
-			$_SESSION['sessionID'] = $sessionID;
-			$_SESSION['sessionCode'] = $sessionCode;
 			$_SESSION['studentName'] = $studentName;
 			$_SESSION['displayName'] = $displayName;
-			// echo "New record created successfully";
 			header('Location: session.php');
+			exit;
 		} else {
 			echo "Error: " . $sql . "<br>" . $conn->error;
 		}

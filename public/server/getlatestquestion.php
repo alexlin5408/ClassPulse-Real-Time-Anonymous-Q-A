@@ -1,11 +1,7 @@
 <?php
-$config = parse_ini_file("../../../database/db_config.ini");
+//Connect to the database
+require_once __DIR__ . '/../../database/db.php';
 
-$conn = new mysqli($config["servername"], $config["username"], $config["password"], $config["dbname"]);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 session_start();
 if (isset($_SESSION['sessionID'])) {
 $sessionID = $_SESSION['sessionID'];
@@ -34,4 +30,3 @@ if ($stmt) {
 }
 
 $conn->close();
-?>

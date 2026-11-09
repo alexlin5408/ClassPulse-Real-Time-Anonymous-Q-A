@@ -1,15 +1,8 @@
 <?php
 session_start();
 
-// Create connection
-$config = parse_ini_file("../../../database/db_config.ini");
-
-$conn = new mysqli($config["servername"], $config["username"], $config["password"], $config["dbname"]);
-
-// Check connection
-if ($conn->connect_error) {
-	die("Connection failed: " . $conn->connect_error);
-}
+//Connect to the database
+require_once __DIR__ . '/../../database/db.php';
 
 if (isset($_POST['session_name'])) {
 	$sessionName = $_POST['session_name'];
@@ -49,4 +42,3 @@ if ($conn->query($sql) === TRUE) {
 	echo "Error: " . $sql . "<br>" . $conn->error;
 	$conn->close();
 }
-?>
